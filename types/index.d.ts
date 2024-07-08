@@ -1,3 +1,4 @@
+// FORM TYPES
 declare type SignUpParams = {
   firstName: string;
   lastName: string;
@@ -8,3 +9,8 @@ declare type SignUpParams = {
   email: string;
   password: string;
 };
+
+declare interface signInProps {
+  email: string;
+  password: string;
+}

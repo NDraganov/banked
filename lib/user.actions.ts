@@ -31,11 +31,35 @@ export async function signUp(userData: SignUpParams) {
   }
 }
 
+export async function signIn({ email, password }: signInProps) {
+  try {
+    const { account } = await createAdminClient();
+    const session = await account.createEmailPasswordSession(email, password);
+
+    return parseStringify(session);
+  } catch (error) {
+    console.error("Error", error);
+  }
+}
+
 // GET USER
 export async function getLoggedInUser() {
   try {
     const { account } = await createSessionClient();
     return await account.get();
+  } catch (error) {
+    return null;
+  }
+}
+
+// LOGOUT USER
+export async function logoutUser() {
+  try {
+    const { account } = await createSessionClient();
+
+    cookies().delete("appwrite-session");
+
+    await account.deleteSession("current");
   } catch (error) {
     return null;
   }

@@ -1,18 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Form } from "../ui/form";
 import { Button } from "../ui/button";
 import { authFormSchema } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn, signUp } from "@/lib/user.actions";
 
 import FormInput from "./FormInput";
-import { signUp } from "@/lib/user.actions";
-import { LoaderCircle, LoaderPinwheel } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 
 export default function AuthForm({ type }: { type: string }) {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const formSchema = authFormSchema(type);
@@ -44,6 +46,16 @@ export default function AuthForm({ type }: { type: string }) {
         };
 
         const newUser = await signUp(userData);
+      }
+
+      // Sign in with Appwrite
+      if (type === "sign-in") {
+        const response = await signIn({
+          email: data.email,
+          password: data.password,
+        });
+
+        router.push("/");
       }
     } catch (error) {
       console.log(error);
