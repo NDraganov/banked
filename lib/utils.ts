@@ -20,7 +20,7 @@ export const authFormSchema = (type: string) =>
     address: type === "sign-in" ? z.string().optional() : z.string().max(50),
     city: type === "sign-in" ? z.string().optional() : z.string().max(50),
     postCode:
-      type === "sign-in" ? z.string().optional() : z.string().min(3).max(6),
+      type === "sign-in" ? z.string().optional() : z.string().min(3).max(10),
     dateOfBirth: type === "sign-in" ? z.string().optional() : z.string().min(3),
     // Both Forms
     email: z.string().email(),
