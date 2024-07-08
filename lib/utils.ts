@@ -6,6 +6,12 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// FORMAT FUNCTIONS
+
+export function parseStringify(value: any) {
+  JSON.parse(JSON.stringify(value));
+}
+
 export const authFormSchema = (type: string) =>
   z.object({
     // Sign Up Form
